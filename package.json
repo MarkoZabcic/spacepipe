@@ -28,6 +28,8 @@
     "webpack": "^2.5.1"
   },
   "dependencies": {
+    "async-child-process": "^1.1.1",
+    "async-file": "^2.0.2",
     "babel-polyfill": "^6.23.0",
     "babel-runtime": "^6.23.0",
     "moment": "^2.18.1",
