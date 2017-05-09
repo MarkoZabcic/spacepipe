@@ -1,6 +1,5 @@
 #!/bin/sh
-OPTIONS="-t meteorapp $2"
-echo "Version: $1"
+OPTIONS="-t ${npm_package_name} $1"
 echo "Options: ${OPTIONS}"
 
 # build docker Image

@@ -4,6 +4,7 @@ import rc from 'vorpal-rc';
 import updateVersionInfo from './src/update-version-info';
 import buildMeteor from './src/build-meteor';
 import buildDocker from './src/build-docker';
+import fire from './src/fire';
 
 const vorpal = new Vorpal();
 const RC_PATH = './spacepiperc';
@@ -25,7 +26,7 @@ vorpal
 
 vorpal
   .command('fire', 'Test & build meteor application, build docker image & push to registry')
-  .action(updateVersionInfo);
+  .action(fire);
 
 if (fs.existsSync(RC_PATH)) {
   vorpal.use(rc, RC_PATH);

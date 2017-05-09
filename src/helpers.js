@@ -8,8 +8,8 @@ export async function measuredExec({ info, command, print }) {
   const npmStream = exec(command);
   if (process.env.DEBUG) {
     npmStream.stdout.on('data', print);
-    npmStream.stderr.on('data', print);
   }
+  npmStream.stderr.on('data', print);
   await join(npmStream);
   const end = moment();
   const seconds = end.diff(start, 'seconds');
