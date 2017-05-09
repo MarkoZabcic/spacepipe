@@ -12,8 +12,16 @@
     "prepublish": "npm build && npm test"
   },
   "bin": "cli.js",
-  "author": "",
-  "license": "ISC",
+  "author": "Pascal Kaufmann",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/reactivec/spacepipe.git"
+  },
+  "bugs": {
+    "url": "https://github.com/reactivec/spacepipe/issues"
+  },
+  "homepage": "https://github.com/reactivec/spacepipe",
   "devDependencies": {
     "ava": "^0.19.1",
     "babel-eslint": "^7.2.1",
@@ -30,8 +38,6 @@
   "dependencies": {
     "async-child-process": "^1.1.1",
     "async-file": "^2.0.2",
-    "babel-polyfill": "^6.23.0",
-    "babel-runtime": "^6.23.0",
     "moment": "^2.18.1",
     "promise": "^7.1.1",
     "vorpal": "^1.12.0",
