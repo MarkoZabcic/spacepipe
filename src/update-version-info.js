@@ -32,5 +32,6 @@ export default async function updateVersionInfo(args, callback) {
   const pathToFile = path.normalize(`${currentDirectory}/${VERSION_FILE}`);
   this.log(`>(spacepipe)>: Updating version file (${pathToFile})\n${fileContent}`);
   await writeFile(pathToFile, fileContent);
-  return callback();
+  if (callback) callback();
+  return true;
 }
