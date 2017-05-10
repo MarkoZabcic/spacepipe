@@ -68,7 +68,7 @@ WORKDIR ${USERHOME}/bundle
 ENV PORT 3000
 EXPOSE 3000
 ENV NODE_ENV production
-USER user
+USER ${USERNAME}
 CMD node --max_old_space_size=1024 main.js
 EOM
 cp ${PROJECTSPACEPIPEDIR}/Dockerfile-runtime ${BUILDDIR}/bundle-alpine/Dockerfile

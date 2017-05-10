@@ -10,7 +10,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'build.js',
-    libraryTarget: 'commonjs2',
+    libraryTarget: 'umd',
   },
   module: {
     loaders: [{
