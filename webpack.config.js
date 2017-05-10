@@ -15,8 +15,8 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.js$/,
-      loader: ['shebang-loader', 'babel-loader'],
-      exclude: /node_modules|cli.js/,
+      loader: ['babel-loader'],
+      exclude: /node_modules|cli.js|examples/,
     }],
   },
 };

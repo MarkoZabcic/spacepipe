@@ -1,0 +1,17 @@
+{
+  "name": "todos-react",
+  "private": true,
+  "scripts": {
+    "start": "meteor run",
+    "build": "spacepipe fire",
+    "meteorbuild": "meteor build --directory .build;exit 0",
+    "test": "NODE_ENV=development meteor test --once --driver-package practicalmeteor:mocha;exit 0"
+  },
+  "dependencies": {
+    "babel-runtime": "^6.20.0",
+    "meteor-node-stubs": "~0.2.4"
+  },
+  "devDependencies": {
+    "spacepipe": "^1.0.0"
+  }
+}
