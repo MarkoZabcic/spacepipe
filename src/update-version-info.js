@@ -4,7 +4,6 @@ import path from 'path';
 import moment from 'moment';
 
 const VERSION_FILE = 'private/version.json';
-const BUILD_NUMBER = process.env.npm_package_config_buildNumber;
 
 async function getBranch() {
   const { stdout } = await execAsync("git branch | grep '*'");
@@ -16,7 +15,7 @@ async function getCommit() {
   return stdout.replace('* ', '').replace('\n', '');
 }
 
-export default async function updateVersionInfo(args, callback) {
+export default async function updateVersionInfo({ build }, callback) {
   const currentDirectory = process.cwd();
   const { version } = JSON.parse(await readFile('package.json', 'utf-8'));
 
@@ -24,7 +23,7 @@ export default async function updateVersionInfo(args, callback) {
     timestamp: moment().format('DD-MM-YYYY HH:mm'),
     branch: await getBranch(),
     commit: await getCommit(),
-    build: BUILD_NUMBER,
+    build: build || 'local',
     version,
   };
 

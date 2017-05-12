@@ -10,13 +10,16 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'build.js',
-    libraryTarget: 'umd',
   },
   module: {
     loaders: [{
       test: /\.js$/,
-      loader: ['babel-loader'],
+      loader: 'babel-loader',
       exclude: /node_modules|cli.js|examples/,
+      query: {
+        presets: ['es2015', 'env', 'stage-2'],
+      },
     }],
   },
+  devtool: 'source-map',
 };

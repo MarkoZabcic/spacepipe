@@ -1,7 +1,7 @@
 import updateVersionInfo from './update-version-info';
 import { measuredExec } from './helpers';
 
-export default async function buildMeteor({ options }, callback) {
+export default async function buildMeteor({ build, options }, callback) {
   const print = data => this.log(data);
   await measuredExec({
     command: 'meteor npm install',
@@ -17,7 +17,7 @@ export default async function buildMeteor({ options }, callback) {
     });
   }
   if (!options || !options['keep-version']) {
-    await updateVersionInfo.bind(this)();
+    await updateVersionInfo.bind(this)({ build });
   }
   await measuredExec({
     command: 'meteor npm run meteorbuild',

@@ -1,6 +1,7 @@
 {
-  "timestamp": "12-05-2017 08:42",
+  "timestamp": "12-05-2017 11:07",
   "branch": "develop",
-  "commit": "7d8a3fb698f56577b1659a1a5269883d60231bfd",
+  "commit": "5bd6b1bc7128d6c20bd03e50b1ab10242ff415c9",
+  "build": "local",
   "version": "1.0.0"
 }
