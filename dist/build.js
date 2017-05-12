@@ -45295,8 +45295,9 @@ exports.default = function () {
   var _ref = _asyncToGenerator(regeneratorRuntime.mark(function _callee(_ref2, callback) {
     var _this = this;
 
-    var options = _ref2.options;
-    var print;
+    var tags = _ref2.tags,
+        options = _ref2.options;
+    var print, defaultTags, additionalTags, i, tag, allTagsString;
     return regeneratorRuntime.wrap(function _callee$(_context) {
       while (1) {
         switch (_context.prev = _context.next) {
@@ -45305,44 +45306,106 @@ exports.default = function () {
               return _this.log(data);
             };
 
-            _context.next = 3;
+            defaultTags = [];
+            additionalTags = [];
+
+            if (process.env.npm_package_name) {
+              if (process.env.npm_package_version) {
+                defaultTags.push(process.env.npm_package_name + ':' + process.env.npm_package_version);
+              } else {
+                defaultTags.push('' + process.env.npm_package_name);
+              }
+            }
+
+            if (!(tags && tags.length > 0)) {
+              _context.next = 8;
+              break;
+            }
+
+            tags.forEach(function (tag) {
+              return additionalTags.push(tag);
+            });
+            _context.next = 17;
+            break;
+
+          case 8:
+            i = 0;
+
+          case 9:
+            if (!process.env['npm_package_config_dockerTags_' + i]) {
+              _context.next = 17;
+              break;
+            }
+
+            tag = process.env['npm_package_config_dockerTags_' + i];
+
+            if (tag) {
+              _context.next = 13;
+              break;
+            }
+
+            return _context.abrupt('break', 17);
+
+          case 13:
+            additionalTags.push(tag);
+            i += 1;
+            _context.next = 9;
+            break;
+
+          case 17:
+            _context.next = 19;
             return (0, _helpers.measuredExec)({
               command: __dirname + '/../scripts/generate-dockerfiles.sh',
               info: 'build-docker (Generating dockerfiles)',
               print: print
             });
 
-          case 3:
+          case 19:
+            allTagsString = '"-t ' + defaultTags.concat(additionalTags).join(' -t ') + '"';
+
             if (!(!options || !options['local-engine'])) {
-              _context.next = 8;
+              _context.next = 25;
               break;
             }
 
-            _context.next = 6;
+            _context.next = 23;
             return (0, _helpers.measuredExec)({
-              command: __dirname + '/../scripts/build_in_siblings.sh',
+              command: __dirname + '/../scripts/build_in_siblings.sh ' + allTagsString,
               info: 'build-docker (Build image in sibling mode)',
               print: print
             });
 
-          case 6:
-            _context.next = 10;
+          case 23:
+            _context.next = 27;
             break;
 
-          case 8:
-            _context.next = 10;
+          case 25:
+            _context.next = 27;
             return (0, _helpers.measuredExec)({
-              command: __dirname + '/../scripts/build_local.sh',
+              command: __dirname + '/../scripts/build_local.sh ' + allTagsString,
               info: 'build-docker (Build image in local mode)',
               print: print
             });
 
-          case 10:
+          case 27:
+            if (!(options && options['push-to-registry'] && additionalTags.length > 0)) {
+              _context.next = 30;
+              break;
+            }
+
+            _context.next = 30;
+            return (0, _helpers.measuredExec)({
+              command: 'docker push ' + additionalTags.join(' '),
+              info: 'push image to registry',
+              print: print
+            });
+
+          case 30:
 
             if (callback) callback();
             return _context.abrupt('return', true);
 
-          case 12:
+          case 32:
           case 'end':
             return _context.stop();
         }
@@ -61794,7 +61857,7 @@ vorpal.command('update-version', 'Generate new version.json file out of GIT, pac
 
 vorpal.command('build-meteor', 'Test & build meteor application').option('-f, --fast', 'ignore tests').option('-k, --keep-version', 'no version.json update').action(_buildMeteor2.default);
 
-vorpal.command('build-docker', 'Wrap the built app into a production docker image').option('-l, --local-engine', 'Local build (usually slower, requires local docker engine installation like docker toolbox)').action(_buildDocker2.default);
+vorpal.command('build-docker [tags...]', 'Wrap the built app into a production docker image').option('-l, --local-engine', 'Local build (usually slower, requires local docker engine installation like docker toolbox)').option('-p, --push-to-registry', 'Push specified tags to registry').action(_buildDocker2.default);
 
 vorpal.command('fire', 'Test & build meteor application, build docker image & push to registry').action(_fire2.default);
 

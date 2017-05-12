@@ -20,8 +20,9 @@ vorpal
   .action(buildMeteor);
 
 vorpal
-  .command('build-docker', 'Wrap the built app into a production docker image')
+  .command('build-docker [tags...]', 'Wrap the built app into a production docker image')
   .option('-l, --local-engine', 'Local build (usually slower, requires local docker engine installation like docker toolbox)')
+  .option('-p, --push-to-registry', 'Push specified tags to registry')
   .action(buildDocker);
 
 vorpal

@@ -2,10 +2,16 @@
   "name": "todos-react",
   "private": true,
   "version": "1.0.0",
+  "config": {
+    "buildNumber": "local",
+    "dockerTags": [
+      "localhost/todos-react:latest"
+    ]
+  },
   "scripts": {
     "postinstall": "npm link ../../",
     "start": "meteor run",
-    "build": "spacepipe fire",
+    "build": "spacepipe build-docker",
     "meteorbuild": "meteor build --directory .build;exit 0",
     "test": "NODE_ENV=development meteor test --once --driver-package dispatch:mocha;exit 0"
   },
