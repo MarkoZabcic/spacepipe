@@ -30,10 +30,12 @@ export default async function fire({ tags, options }, callback) {
   await buildMeteor.bind(this)({ build: process.env.npm_package_config_buildNumber, options: {} });
   await buildDocker.bind(this)({ tags: defaultTags.concat(additionalTags), options: {} });
   if (additionalTags.length > 0) {
-    await measuredExec({
-      command: `docker push ${additionalTags.join(' ')}`,
-      info: 'push image to registry',
-      print,
+    additionalTags.forEach(async (tag) => {
+      await measuredExec({
+        command: `docker push ${tag}`,
+        info: 'push image to registry',
+        print,
+      });
     });
   }
   if (callback) callback();

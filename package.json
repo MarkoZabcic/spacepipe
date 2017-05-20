@@ -1,6 +1,6 @@
 {
   "name": "spacepipe",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Build Management for Meteor Applications",
   "main": "dist/build.js",
   "scripts": {

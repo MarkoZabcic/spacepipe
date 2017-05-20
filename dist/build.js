@@ -59991,15 +59991,15 @@ var buildDocker = (function () {
 module.exports = exports['default'];
 
 var fire = (function () {
-  var _ref = asyncToGenerator(regeneratorRuntime.mark(function _callee(_ref2, callback) {
+  var _ref = asyncToGenerator(regeneratorRuntime.mark(function _callee2(_ref2, callback) {
     var _this = this;
 
     var tags = _ref2.tags,
         options = _ref2.options;
     var print, defaultTags, additionalTags, i, tag;
-    return regeneratorRuntime.wrap(function _callee$(_context) {
+    return regeneratorRuntime.wrap(function _callee2$(_context2) {
       while (1) {
-        switch (_context.prev = _context.next) {
+        switch (_context2.prev = _context2.next) {
           case 0:
             print = function print(data) {
               return _this.log(data);
@@ -60017,14 +60017,14 @@ var fire = (function () {
             }
 
             if (!(tags && tags.length > 0)) {
-              _context.next = 8;
+              _context2.next = 8;
               break;
             }
 
             tags.forEach(function (tag) {
               return additionalTags.push(tag);
             });
-            _context.next = 17;
+            _context2.next = 17;
             break;
 
           case 8:
@@ -60032,56 +60032,70 @@ var fire = (function () {
 
           case 9:
             if (!process.env['npm_package_config_dockerTags_' + i]) {
-              _context.next = 17;
+              _context2.next = 17;
               break;
             }
 
             tag = process.env['npm_package_config_dockerTags_' + i];
 
             if (tag) {
-              _context.next = 13;
+              _context2.next = 13;
               break;
             }
 
-            return _context.abrupt('break', 17);
+            return _context2.abrupt('break', 17);
 
           case 13:
             additionalTags.push(tag);
             i += 1;
-            _context.next = 9;
+            _context2.next = 9;
             break;
 
           case 17:
-            _context.next = 19;
+            _context2.next = 19;
             return buildMeteor.bind(this)({ build: process.env.npm_package_config_buildNumber, options: {} });
 
           case 19:
-            _context.next = 21;
+            _context2.next = 21;
             return buildDocker.bind(this)({ tags: defaultTags.concat(additionalTags), options: {} });
 
           case 21:
-            if (!(additionalTags.length > 0)) {
-              _context.next = 24;
-              break;
-            }
+            if (additionalTags.length > 0) {
+              additionalTags.forEach(function () {
+                var _ref3 = asyncToGenerator(regeneratorRuntime.mark(function _callee(tag) {
+                  return regeneratorRuntime.wrap(function _callee$(_context) {
+                    while (1) {
+                      switch (_context.prev = _context.next) {
+                        case 0:
+                          _context.next = 2;
+                          return measuredExec({
+                            command: 'docker push ' + tag,
+                            info: 'push image to registry',
+                            print: print
+                          });
 
-            _context.next = 24;
-            return measuredExec({
-              command: 'docker push ' + additionalTags.join(' '),
-              info: 'push image to registry',
-              print: print
-            });
+                        case 2:
+                        case 'end':
+                          return _context.stop();
+                      }
+                    }
+                  }, _callee, _this);
+                }));
+
+                return function (_x3) {
+                  return _ref3.apply(this, arguments);
+                };
+              }());
+            }
+            if (callback) callback();
+            return _context2.abrupt('return', true);
 
           case 24:
-            if (callback) callback();
-            return _context.abrupt('return', true);
-
-          case 26:
           case 'end':
-            return _context.stop();
+            return _context2.stop();
         }
       }
-    }, _callee, this);
+    }, _callee2, this);
   }));
 
   function fire(_x, _x2) {
