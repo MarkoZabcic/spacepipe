@@ -1,0 +1,22 @@
+version: '2'
+services:
+  db:
+    image: mongo:3.2
+    hostname: mongodb
+    volumes:
+      - /data:/data/db
+    expose:
+      - "27017"
+    command: --noprealloc --smallfiles --replSet rs0
+    restart: always
+
+  webapp:
+    image: myimage
+    ports:
+      - "80:3000"
+    links:
+      - db:db
+    environment:
+      - MONGO_URL=mongodb://db/myapp
+      - ROOT_URL=https://myapp.com
+    restart: always

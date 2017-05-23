@@ -15,14 +15,37 @@ If you call it with additional docker tags: "npm run build private.registry.loca
 
 If you added a "test" npm script, that one will be run before building in a isolated environment.
 
-## Using spacepipe in a ci environment with only docker installed
+## Using spacepipe in a CI environment with only docker installed
 **Spacepipe only needs docker installed to work in CI mode. All node & meteor specific tasks are run inside docker containers.**
 
 Add a Dockerfile with this content to the root of your app:
     FROM pozylon/spacepipe
 
 Run
-    docker build .
+    docker build -t spacepipe
+    docker run spacepipe
+
+## Deploying a spacepipe built Meteor app with docker-machine and docker-compose
+
+connect to any remote docker engine host which has a publicly accessible port 80 by setting the environment variables DOCKER_HOST and DOCKER_CERT_PATH directly or by using docker-machine:
+
+    eval $(docker-machine env mydockerhost)
+
+If you don't have such a remote docker host watch this tutorial and create your own:
+https://docs.docker.com/machine/examples/aws/
+
+run spacepipe and tag the image in docker as "myimage"
+
+    npm run build -- myimage
+
+define a docker-compose.yml file like the one in examples/docker-compose-yml and adjust the image # name to myimage. it's time for deployment:
+
+    docker-compose up -d
+
+everytime spacepipe pushed a new version of myimage to the docker host, you can initiate deployment of the newest version by running:
+
+    docker-compose pull
+    docker-compose up -d
 
 
 ## Planned features
