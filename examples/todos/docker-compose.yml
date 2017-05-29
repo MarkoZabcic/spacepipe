@@ -7,7 +7,7 @@ services:
       - /data:/data/db
     expose:
       - "27017"
-    command: --noprealloc --smallfiles --replSet rs0
+    command: --noprealloc --smallfiles
     restart: always
 
   webapp:
